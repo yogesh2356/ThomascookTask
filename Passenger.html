@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="knockout-3.5.1.js"></script>
+   
+    <style>
+        .validationMessage{
+                color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class ="row">
+            <div class="col-md-8">
+    <form data-bind ="submit :addPassenger">
+        
+        <div class="form-group">
+          <label >First Name</label>
+          <input type="text" class="form-control" data-bind ="value:firstName , valueupdate:'afterKeyDown'" placeholder="First Name" >
+        </div>
+        <div class="form-group">
+            <label >Last Name</label>
+            <input type="text" class="form-control" data-bind ="value:lastName , valueupdate:'afterKeyDown'" placeholder="Last Name" >
+          </div>
+          <div class="form-group">
+            <label >Email address</label>
+            <input type="email" class="form-control" data-bind ="value:email , valueupdate:'afterKeyDown'" aria-describedby="emailHelp" placeholder="Enter email">
+          </div>
+
+          <div   class="form-group">            
+            <label >Country :</label>
+            <select name="Country" data-bind ="value:Country, valueupdate:'afterKeyDown'">
+              <option value="India">India</option>
+              <option value="Bhutan">Bhutan</option>
+              <option value="Nepal">Nepal</option>
+              <option value="SriLanka">SriLanka</option>
+            </select>
+          </div>
+
+          <label >Branch :</label>
+           <select name="Branch"  data-bind ="value:Branch, valueupdate:'afterKeyDown'">
+             <option value="Mumbai">Mumbai</option>
+             <option value="Delhi">Delhi</option>
+             <option value="Ahemedabad">Ahemedabad</option>
+            
+           </select>
+           
+          <div>
+            <label >Enter a phone number:</label><br>
+            <input type="tel"data-bind ="value:phone, valueupdate:'afterKeyDown'" name="phone" ><br>
+          </div>
+       
+          <div>
+            <label >Enter Passenger number:</label>
+            <input type="text" class="form-control" data-bind ="value:passenger, valueupdate:'afterKeyDown'" placeholder="No of passenger">
+          </div>
+
+          <div>
+           <b>Visa Type :</b>
+           <input type="radio" name="visatype" value="tourist" data-bind="checked:isTourist.ForEditing"/>
+          
+           <label>Tourist</label>
+           <input type="radio" name="visatype" value="business" data-bind="checked:isTourist.ForEditing"/>
+        
+           <label>Business</label>
+           <input type="radio" name="visatype" value="other" data-bind="checked:isTourist.ForEditing"/>
+        
+          <label>Others </label>
+          </div>
+
+          <div>
+          <b>Visa SubType:</b> 
+          <span data-bind="visible: tourist">
+            <span><input type="radio" name="touristVisaSubType" value="6" data-bind="checked: touristVisaSubType" /> 6 month</span>
+            <span><input type="radio" name="touristVisaSubType" value="12" data-bind="checked: touristVisaSubType" /> 12 month</span>
+          </span>
+          <span data-bind="visible: business">
+            <span><input type="radio" name="businessVisaSubType" value="1" data-bind="checked: businessVisaSubType" /> 1 month</span>
+            <span><input type="radio" name="businessVisaSubType" value="2" data-bind="checked: businessVisaSubType" /> 2 month</span>
+            
+          </span>
+          <span data-bind="visible: other">
+            <span><input type="radio" name="otherVisaSubType" value="4" data-bind="checked: otherVisaSubType" /> 10 month</span>
+            <span><input type="radio" name="otherVisaSubType" value="8" data-bind="checked: otherVisaSubType" /> 7 month</span>
+          </span>
+       
+         <br><button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+    </div>
+</div>
+</div>
+<div class="row">
+
+  <div class="col-md-12">
+
+      <div class="panel panel-default">
+
+          <div class="panel-heading">
+              <span class="glyphicon  glyphicon glyphicon-zoom-in" aria-hidden="true"></span>  <b>Passenger List </b>
+             
+          </div>
+
+          <div class="panel-body">
+
+              <table class="table table-hover">
+
+                  <thead>
+                      <tr>
+                          <th>#</th>
+                          <th>First Name</th>
+                          <th>Last Name</th>
+                          <th>Email</th>
+                          <th>Country</th>
+                          <th>Branch</th>
+                          <th>Mobile Number</th>
+                          <th>No of Passenger</th>
+                          <th>Visa Type</th>
+                          <th>Visa SubType(Months)</th>
+                          <th> Action</th>
+                      </tr>
+                  </thead> <!-- Here end Head -->
+
+                  <tbody data-bind="foreach: passengerList">
+                      <tr>
+                          <td> <span data-bind="text: ($index()+1)"></span> </td>
+                          <td> <span data-bind="text: firstName"></span></td>
+                          <td> <span data-bind="text: lastName"></span></td>
+                          <td> <span data-bind="text: email"></span> </td>
+                          <td> <span data-bind="text: Country"></span> </td>
+                          <td> <span data-bind="text: Branch"></span> </td>
+                          <td> <span data-bind="text: phone"></span> </td>
+                          <td> <span data-bind="text: passenger"></span> </td>
+                          <td> <span data-bind="text: isTourist"></span> </td>
+                          <td> <span data-bind="text: visaSubType"></span> </td>
+                     
+                          <td>
+                              <button type="button" class="btn btn-danger btn-xs">
+                                  <span class="glyphicon glyphicon glyphicon-trash" aria-hidden="true" data-bind="click: $root.deleteCustomer">Remove</span>
+                              </button>
+                          </td>
+
+                      </tr>
+                  </tbody> <!-- Here end table body -->
+
+              </table> <!-- End Table -->
+          </div>
+
+      </div>
+
+  </div>
+  
+</div>
+</div> 
+<script src="knockout.validation.js"></script>
+<script src="PassengerJs.js"></script>
+</body>
+</html>
